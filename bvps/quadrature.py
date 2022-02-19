@@ -5,7 +5,8 @@ from dataclasses import dataclass
 from typing import Dict
 
 import numpy as np
-from probnum import kernels, quad
+from probnum import quad
+from probnum.randprocs import kernels
 
 
 @dataclass
@@ -52,7 +53,8 @@ def expquad_interior_only(expquad_lengthscale=1.0):
     variance_embedding = kernel_embedding.kernel_variance()
 
     # Compute weights and (uncalibrated) posterior variance
-    K = gaussian_kernel(grid, grid)
+    # K = gaussian_kernel(grid, grid)
+    K = gaussian_kernel.matrix(grid, grid)
     Kinv = np.linalg.inv(K)
     weights = mean_embedding @ Kinv
     variance = np.abs(variance_embedding - weights @ mean_embedding)

@@ -1,13 +1,12 @@
 """Custom stopping criteria."""
-
-
 import numpy as np
 import scipy.linalg
-from probnum import filtsmooth, randvars, statespace, utils
+from probnum import filtsmooth, random_variables, statespace, utils
+from probnum.pnmethod import StoppingCriterion
 from probnum._randomvariablelist import _RandomVariableList
 
 
-class MyStoppingCriterion(filtsmooth.StoppingCriterion):
+class MyStoppingCriterion(StoppingCriterion):
     def __init__(self, atol=1e-3, rtol=1e-6, maxit=1000, maxit_reached="error"):
         self.atol = atol
         self.rtol = rtol
@@ -66,7 +65,7 @@ class MyStoppingCriterion(filtsmooth.StoppingCriterion):
         return error / normalisation
 
 
-class ConstantStopping(filtsmooth.StoppingCriterion):
+class ConstantStopping(StoppingCriterion):
     def terminate(self, error, reference):
 
         if self.iterations > self.maxit:

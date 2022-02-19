@@ -42,7 +42,7 @@ def from_ode(ode, prior, damping_value=0.0):
         jacob_state_trans_fun=jacobian,
         proc_noise_cov_cholesky_fun=diff_cholesky,
     )
-    return filtsmooth.DiscreteEKFComponent(
+    return filtsmooth.gaussian.approx.DiscreteEKFComponent(
         discrete_model,
         forward_implementation="sqrt",
         backward_implementation="sqrt",

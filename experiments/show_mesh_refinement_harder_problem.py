@@ -1,18 +1,13 @@
 """Try out probsolve_bvp."""
 import itertools
-import warnings
+import sys
 
-import matplotlib as mpl
+sys.path.append("..")
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
-from probnum import diffeq, filtsmooth
-from probnum import random_variables as randvars
-from probnum import randvars, statespace
-from probnum._randomvariablelist import _RandomVariableList
-from tqdm import tqdm
-
 from bvps import bvp_solver, ode_measmods, problem_examples
+from probnum import statespace
+from probnum._randomvariablelist import _RandomVariableList
 
 bvp = problem_examples.problem_24_second_order(xi=1e-2)
 ibm = statespace.IBM(
@@ -26,7 +21,7 @@ measmod = ode_measmods.from_second_order_ode(bvp, ibm)
 
 # Solver and solver parameters
 solver = bvp_solver.BVPSolver.from_default_values_std_refinement(
-    ibm, use_bridge=True, initial_sigma_squared=1e2, normalise_with_interval_size=False
+    ibm, initial_sigma_squared=1e2, normalise_with_interval_size=False
 )
 MAXIT = 10
 TOL = 1e-2

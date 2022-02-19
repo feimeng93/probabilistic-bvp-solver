@@ -3,7 +3,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from probnum import diffeq, filtsmooth, randvars, statespace
+from probnum import diffeq, filtsmooth, random_variables, statespace
 from probnumeval.timeseries import (
     average_normalized_estimation_error_squared,
     non_credibility_index,
@@ -57,7 +57,7 @@ ibm = statespace.IBM(
 
 integ = WrappedIntegrator(ibm, bvp)
 
-rv = randvars.Normal(np.zeros(ibm.dimension), 2.0 * np.eye(ibm.dimension))
+rv = random_variables.Normal(np.zeros(ibm.dimension), 2.0 * np.eye(ibm.dimension))
 initrv, _ = integ.forward_rv(rv, t=bvp.t0, dt=0.0)
 
 measmod = from_ode(bvp, ibm)

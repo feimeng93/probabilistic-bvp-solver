@@ -1,7 +1,7 @@
 """Initialise a BVP solver."""
 import numpy as np
 import scipy.linalg
-from probnum import diffeq, filtsmooth, problems, randvars, statespace, utils
+from probnum import diffeq, filtsmooth, problems, random_variables, statespace, utils
 from probnum._randomvariablelist import _RandomVariableList
 
 from .kalman import MyIteratedDiscreteComponent, MyKalman
@@ -34,7 +34,7 @@ def bvp_initialise_ode(bvp, bridge_prior, initial_grid, initrv):
         measmod = from_ode(bvp, bridge_prior)
         bvp_dim = len(bvp.R.T)
 
-    # rv = randvars.Normal(
+    # rv = random_variables.Normal(
     #     np.zeros(bridge_prior.dimension), 1e5 * np.eye(bridge_prior.dimension)
     # )
     # initrv = bridge_prior.initialise_boundary_conditions(rv)
@@ -68,7 +68,7 @@ def bvp_initialise_guesses(bvp, bridge_prior, initial_grid, initial_guesses, ini
         proc_noise_cov_cholesky=1e-3 * np.eye(d),
     )
 
-    # rv = randvars.Normal(
+    # rv = random_variables.Normal(
     #     np.ones(bridge_prior.dimension), 1e2 * np.eye(bridge_prior.dimension)
     # )
 

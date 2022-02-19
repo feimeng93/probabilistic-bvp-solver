@@ -1,7 +1,9 @@
 """Assert that the jacobians are implemented correctly."""
+import sys
+
+sys.path.append("..")
 import numpy as np
 import pytest
-
 from bvps.problem_testset import testset_firstorder
 
 

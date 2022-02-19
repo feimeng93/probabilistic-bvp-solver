@@ -48,7 +48,6 @@ xticks = []
 xticklabels = []
 
 
-
 for problem_index, key in enumerate(data.keys()):
     problem_results = data[key]["6"]
     problem_results_1e2 = problem_results["0.1"]
@@ -127,13 +126,45 @@ for problem_index, key in enumerate(data.keys()):
         color="black",
     )
 
-    ax.semilogy(problem_index - SHIFT, error_1e2, marker="v", markersize=7, markeredgecolor="C0", markerfacecolor=fillcolor_1e2, markeredgewidth=1., zorder=9)
-    ax.semilogy(problem_index - SHIFT, error_1e5, marker="v", markersize=7, markeredgecolor="C2", markerfacecolor=fillcolor_1e5, markeredgewidth=1., zorder=9)
     ax.semilogy(
-        problem_index + SHIFT, scipy_error_1e2, marker="d", markersize=7, markeredgecolor="C0", markerfacecolor="white", markeredgewidth=1., zorder=9
+        problem_index - SHIFT,
+        error_1e2,
+        marker="v",
+        markersize=7,
+        markeredgecolor="C0",
+        markerfacecolor=fillcolor_1e2,
+        markeredgewidth=1.0,
+        zorder=9,
     )
     ax.semilogy(
-        problem_index + SHIFT, scipy_error_1e5, marker="d", markersize=7, markeredgecolor="C2", markerfacecolor="white", markeredgewidth=1., zorder=9
+        problem_index - SHIFT,
+        error_1e5,
+        marker="v",
+        markersize=7,
+        markeredgecolor="C2",
+        markerfacecolor=fillcolor_1e5,
+        markeredgewidth=1.0,
+        zorder=9,
+    )
+    ax.semilogy(
+        problem_index + SHIFT,
+        scipy_error_1e2,
+        marker="d",
+        markersize=7,
+        markeredgecolor="C0",
+        markerfacecolor="white",
+        markeredgewidth=1.0,
+        zorder=9,
+    )
+    ax.semilogy(
+        problem_index + SHIFT,
+        scipy_error_1e5,
+        marker="d",
+        markersize=7,
+        markeredgecolor="C2",
+        markerfacecolor="white",
+        markeredgewidth=1.0,
+        zorder=9,
     )
     #
     # ax.vlines(

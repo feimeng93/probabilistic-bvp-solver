@@ -39,7 +39,9 @@ class BoundaryValueProblem:
 class SecondOrderBoundaryValueProblem:
     """2nd order boundary value problems. Now, f=f(t, y, dy)."""
 
-    f: Callable[[float, np.ndarray, np.ndarray], np.ndarray]
+    f: Callable[
+        [float, np.ndarray, np.ndarray], np.ndarray
+    ]  # Callable[[int], str] is a function of (int) -> str
     t0: float
     tmax: float
 

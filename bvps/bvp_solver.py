@@ -3,7 +3,7 @@ import functools
 
 import numpy as np
 import scipy.linalg
-from probnum import diffeq, randvars, statespace, utils
+from probnum import diffeq, random_variables, statespace, utils
 from probnum._randomvariablelist import _RandomVariableList
 
 from bvps import (
@@ -37,6 +37,7 @@ class BVPSolver:
     def from_default_values_std_refinement(
         cls,
         dynamics_model,
+        use_bridge=True,
         initial_sigma_squared=1e10,
         normalise_with_interval_size=False,
     ):
@@ -62,6 +63,7 @@ class BVPSolver:
         cls,
         dynamics_model,
         initial_sigma_squared=1e10,
+        use_bridge=True,
         normalise_with_interval_size=False,
     ):
         quadrature_rule = quadrature.expquad_interior_only()
@@ -222,7 +224,7 @@ class BVPSolver:
         )
 
         filter_object = self.setup_filter_object(bvp)
-        linearise_at = kalman_posterior.states
+        linearise_at = kalman_posterior.state_rvs
         acceptable_intervals = np.zeros(len(times[1:]), dtype=bool)
         while np.any(np.logical_not(acceptable_intervals)):
 
@@ -241,7 +243,7 @@ class BVPSolver:
                     sigmas = filter_object.sigmas
                     sigma_squared = np.mean(sigmas) / bvp.dimension
 
-                    linearise_at = kalman_posterior.states
+                    linearise_at = kalman_posterior.state_rvs
 
                     if yield_ieks_iterations:
                         yield kalman_posterior, sigma_squared
@@ -298,7 +300,7 @@ class BVPSolver:
         m0 = np.ones(self.dynamics_model.dimension)
         c0 = self.initial_sigma_squared * np.ones(self.dynamics_model.dimension)
         C0 = np.diag(c0)
-        initrv_not_bridged = randvars.Normal(m0, C0, cov_cholesky=np.sqrt(C0))
+        initrv_not_bridged = random_variables.Normal(m0, C0, cov_cholesky=np.sqrt(C0))
         return initrv_not_bridged
 
     def update_covariances_with_sigma_squared(self, initrv_not_bridged, sigma_squared):
@@ -364,7 +366,7 @@ class BVPSolver:
         new_cov_cholesky += 1e-6 * np.eye(len(new_cov_cholesky))
         new_cov = new_cov_cholesky @ new_cov_cholesky.T
 
-        return randvars.Normal(
+        return random_variables.Normal(
             mean=new_mean, cov=new_cov, cov_cholesky=new_cov_cholesky
         )
 
@@ -548,13 +550,13 @@ class ErrorViaStandardDeviation(BVPErrorEstimator):
     Examples
     --------
     >>> from probnum._randomvariablelist import _RandomVariableList
-    >>> from probnum import randvars
+    >>> from probnum import random_variables
     >>> from bvps import quadrature
 
     >>> quadrule = quadrature.QuadratureRule(nodes=[0.3, 0.5, 0.6], weights=[1./3., 1./3., 1./3.], order=5)
     >>> estimator = ErrorViaStandardDeviation(atol=0.5, rtol=0.5, quadrature_rule=quadrule)
 
-    >>> dummy_rv = randvars.Normal(mean=np.ones(1), cov=np.eye(1))
+    >>> dummy_rv = random_variables.Normal(mean=np.ones(1), cov=np.eye(1))
     >>> evaluated_posterior = _RandomVariableList([dummy_rv]*12)
     >>> current_mesh = np.arange(0., 5., step=1.)
     >>> mesh_candidates = construct_candidate_nodes(current_mesh, quadrule.nodes)

@@ -438,7 +438,7 @@ def seir_jac(t, y, params):
     return jac_matrix
 
 
-def problem_20_second_order(xi=1.):
+def problem_20_second_order(xi=1.0):
     """https://rdrr.io/rforge/bvpSolve/f/inst/doc/bvpTests.pdf"""
     L = np.eye(1, 2)
     R = np.eye(1, 2)
@@ -465,15 +465,15 @@ def problem_20_second_order(xi=1.):
 
 
 def p20_rhs_second_order(t, y, dy, xi):
-    return (1 - dy ** 2) / xi
-
-
-def p20_jacobian_second_order_ddy(t, y, dy, xi):
-    return np.ones((1, 1)) * -2.0 * dy / xi
+    return (1 - dy ** 2) / xi  # = ddy
 
 
 def p20_jacobian_second_order_dy(t, y, dy, xi):
-    return np.ones((1, 1)) * 0.0
+    return np.ones((1, 1)) * 0.0  # partial derivative of dy by dy
+
+
+def p20_jacobian_second_order_ddy(t, y, dy, xi):
+    return np.ones((1, 1)) * -2.0 * dy / xi  # partial derivative of ddy by dy
 
 
 def p20_solution(t, xi):
@@ -738,14 +738,13 @@ def p32_jac_fourth_order_ddddy(t, y, dy, ddy, dddy, xi):
     return np.ones((1, 1)) * -y / xi
 
 
-
 def problem_23_second_order(xi=0.25):
 
     L = np.eye(1, 2)
     R = np.eye(1, 2)
 
-    y0 = np.array([.0])
-    ymax = np.array([1.])
+    y0 = np.array([0.0])
+    ymax = np.array([1.0])
 
     t0 = 0.0
     tmax = 1.0
@@ -765,7 +764,7 @@ def problem_23_second_order(xi=0.25):
 
 
 def p23_rhs_second_order(t, y, dy, xi):
-    return np.sinh(y/xi) / xi
+    return np.sinh(y / xi) / xi
 
 
 def p23_jacobian_second_order_ddy(t, y, dy, xi):
@@ -773,4 +772,4 @@ def p23_jacobian_second_order_ddy(t, y, dy, xi):
 
 
 def p23_jacobian_second_order_dy(t, y, dy, xi):
-    return np.ones((1, 1)) * np.cosh(y/xi) / xi**2
+    return np.ones((1, 1)) * np.cosh(y / xi) / xi ** 2

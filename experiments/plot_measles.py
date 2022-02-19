@@ -1,3 +1,6 @@
+import sys
+
+sys.path.append("..")
 import matplotlib.pyplot as plt
 import numpy as np
 from probnum import diffeq, statespace
@@ -43,7 +46,7 @@ t = np.linspace(bvp.t0, bvp.tmax, 200)
 for MAXIT_IEKS, axis_col in zip([MAXIT, 5], axes.T):
     # Solver and solver parameters
     solver = bvp_solver.BVPSolver.from_default_values_std_refinement(
-        ibm, use_bridge=True, initial_sigma_squared=1e5
+        ibm, initial_sigma_squared=1e5
     )
     TOL = 1e-3
 

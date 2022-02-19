@@ -1,14 +1,12 @@
 """Try out probsolve_bvp."""
-import itertools
-import warnings
+import sys
 
+sys.path.append("..")
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from probnum import diffeq, filtsmooth
-from probnum import random_variables as randvars
-from probnum import randvars, statespace
+from probnum import diffeq, filtsmooth, random_variables, statespace
 from probnum._randomvariablelist import _RandomVariableList
 from probnumeval import timeseries
 from tqdm import tqdm
@@ -26,9 +24,7 @@ measmod = ode_measmods.from_second_order_ode(bvp, ibm)
 
 
 # Solver and solver parameters
-solver = bvp_solver.BVPSolver.from_default_values(
-    ibm, use_bridge=True, initial_sigma_squared=1e2
-)
+solver = bvp_solver.BVPSolver.from_default_values(ibm, initial_sigma_squared=1e2)
 MAXIT = 5
 
 # Plotting parameters
@@ -73,10 +69,7 @@ for TOL in [1e-1, 1e-2, 1e-3, 1e-4]:
     initial_grid = np.linspace(bvp.t0, bvp.tmax, N)
     initial_guess = np.ones((len(initial_grid), bvp.dimension))
     solver = bvp_solver.BVPSolver.from_default_values_std_refinement(
-        ibm,
-        use_bridge=True,
-        initial_sigma_squared=1e2,
-        normalise_with_interval_size=False,
+        ibm, initial_sigma_squared=1e2, normalise_with_interval_size=False
     )
     solution_gen = solver.solution_generator(
         bvp,

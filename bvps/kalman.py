@@ -2,7 +2,7 @@
 
 import numpy as np
 import scipy.linalg
-from probnum import filtsmooth, randvars, statespace, utils
+from probnum import filtsmooth, random_variables, statespace, utils
 from probnum._randomvariablelist import _RandomVariableList
 
 
@@ -136,7 +136,7 @@ class MyKalman(filtsmooth.Kalman):
             rvs.append(rv)
 
         return filtsmooth.FilteringPosterior(
-            locations=times, states=rvs, transition=self.dynamics_model
+            locations=times, state_rvs=rvs, transition=self.dynamics_model
         )
 
         # # print(times[0])
@@ -146,7 +146,7 @@ class MyKalman(filtsmooth.Kalman):
         # # if _previous_posterior is not None:
         # #     new_initrv = _previous_posterior[0]
 
-        # #     self.initrv = randvars.Normal(mean=new_initrv.mean, cov=new_initrv.cov, cov_cholesky=new_initrv.cov_cholesky)
+        # #     self.initrv = random_variables.Normal(mean=new_initrv.mean, cov=new_initrv.cov, cov_cholesky=new_initrv.cov_cholesky)
 
         # # self.initrv.mean = _previous_posterior[0].mean
 
@@ -202,7 +202,7 @@ class MyKalman(filtsmooth.Kalman):
 
         # self.sigmas = sigmas
         # # rvs = [
-        # #     randvars.Normal(
+        # #     random_variables.Normal(
         # #         mean=rv.mean,
         # #         cov=ssq * rv.cov,
         # #         cov_cholesky=np.sqrt(ssq) * rv.cov_cholesky,

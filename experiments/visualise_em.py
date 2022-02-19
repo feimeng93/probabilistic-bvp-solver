@@ -1,5 +1,7 @@
 import itertools
+import sys
 
+sys.path.append("..")
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
@@ -23,11 +25,11 @@ MAXIT = 25
 
 plt.style.use(
     [
-        "./visualization/stylesheets/fontsize/7pt.mplstyle",
-        "./visualization/stylesheets/figsize/neurips/23_tile.mplstyle",
-        "./visualization/stylesheets/misc/thin_lines.mplstyle",
-        "./visualization/stylesheets/misc/bottomleftaxes.mplstyle",
-        "./visualization/stylesheets/marker/framed_markers.mplstyle",
+        "../visualization/stylesheets/fontsize/7pt.mplstyle",
+        "../visualization/stylesheets/figsize/neurips/23_tile.mplstyle",
+        "../visualization/stylesheets/misc/thin_lines.mplstyle",
+        "../visualization/stylesheets/misc/bottomleftaxes.mplstyle",
+        "../visualization/stylesheets/marker/framed_markers.mplstyle",
     ]
 )
 

@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from probnum import diffeq, filtsmooth
-from probnum import random_variables as randvars
-from probnum import randvars, statespace
+from probnum import random_variables as random_variables
+from probnum import random_variables, statespace
 from probnum._randomvariablelist import _RandomVariableList
 from probnumeval import timeseries
 from scipy.integrate import solve_bvp
@@ -24,7 +24,7 @@ TMAX = 1.0
 XI = 0.001
 
 
-bvp = problem_examples.bratus_second_order(tmax=1.)
+bvp = problem_examples.bratus_second_order(tmax=1.0)
 bvp1st = bvp.to_first_order()
 
 TOL = 1e-5
@@ -109,9 +109,9 @@ for q in [3, 4, 5]:
         solution = diffeq.KalmanODESolution(post)
 
         testlocations = np.linspace(bvp.t0, bvp.tmax)
-        reference_solution = lambda *args, **kwargs: bvp.solution(
-            *args, **kwargs
-        )[0].reshape((-1, 1))
+        reference_solution = lambda *args, **kwargs: bvp.solution(*args, **kwargs)[
+            0
+        ].reshape((-1, 1))
         # plt.plot(testlocations, reference_solution(testlocations))
         # plt.plot(testlocations, solution(testlocations).mean[:, 0])
         # plt.show()
@@ -134,8 +134,7 @@ for q in [3, 4, 5]:
         assert scipy_solution.success
 
         # How accurate would scipy be?
-        scipy_sol_for_rmse = lambda *args: scipy_solution.sol(*args)[0][:,
-                                           None]
+        scipy_sol_for_rmse = lambda *args: scipy_solution.sol(*args)[0][:, None]
         error_scipy = timeseries.root_mean_square_error(
             scipy_sol_for_rmse, reference_solution, testlocations
         )

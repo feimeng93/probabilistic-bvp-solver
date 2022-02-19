@@ -1,9 +1,11 @@
 """Test for BVP solver."""
+import sys
 
+sys.path.append("..")
 import matplotlib.pyplot as plt
 import numpy as np
 import pytest
-from probnum import filtsmooth, randvars, statespace
+from probnum import filtsmooth, random_variables, statespace
 
 from bvps import bvp_solver, problem_examples, quadrature
 
@@ -16,7 +18,7 @@ def solver(use_bridge):
         forward_implementation="sqrt",
         backward_implementation="sqrt",
     )
-    solver = bvp_solver.BVPSolver.from_default_values(ibm3, use_bridge=use_bridge)
+    solver = bvp_solver.BVPSolver.from_default_values(ibm3)
     return solver
 
 
@@ -34,7 +36,7 @@ def test_bvp_solver(solver):
 def test_choose_measurement_model(solver, bvp):
     ode, left, right = solver.choose_measurement_model(bvp)
 
-    assert isinstance(ode, filtsmooth.DiscreteEKFComponent)
+    assert isinstance(ode, filtsmooth.gaussian.approx.DiscreteEKFComponent)
     assert isinstance(left, statespace.DiscreteLTIGaussian)
     assert isinstance(right, statespace.DiscreteLTIGaussian)
 
@@ -44,18 +46,30 @@ def test_choose_measurement_model(solver, bvp):
     if solver.use_bridge:
         assert isinstance(measmod_list, list)
         assert len(measmod_list) == len(dummy_times_array)
-        assert isinstance(measmod_list[0], filtsmooth.DiscreteEKFComponent)
-        assert isinstance(measmod_list[1], filtsmooth.DiscreteEKFComponent)
-        assert isinstance(measmod_list[-2], filtsmooth.DiscreteEKFComponent)
-        assert isinstance(measmod_list[-1], filtsmooth.DiscreteEKFComponent)
+        assert isinstance(
+            measmod_list[0], filtsmooth.gaussian.approx.DiscreteEKFComponent
+        )
+        assert isinstance(
+            measmod_list[1], filtsmooth.gaussian.approx.DiscreteEKFComponent
+        )
+        assert isinstance(
+            measmod_list[-2], filtsmooth.gaussian.approx.DiscreteEKFComponent
+        )
+        assert isinstance(
+            measmod_list[-1], filtsmooth.gaussian.approx.DiscreteEKFComponent
+        )
 
     if not solver.use_bridge:
         assert isinstance(measmod_list, list)
         assert len(measmod_list) == len(dummy_times_array)
         assert isinstance(measmod_list[0][0], statespace.DiscreteLTIGaussian)
-        assert isinstance(measmod_list[0][1], filtsmooth.DiscreteEKFComponent)
+        assert isinstance(
+            measmod_list[0][1], filtsmooth.gaussian.approx.DiscreteEKFComponent
+        )
         assert isinstance(measmod_list[-1][0], statespace.DiscreteLTIGaussian)
-        assert isinstance(measmod_list[-1][1], filtsmooth.DiscreteEKFComponent)
+        assert isinstance(
+            measmod_list[-1][1], filtsmooth.gaussian.approx.DiscreteEKFComponent
+        )
 
 
 @pytest.mark.parametrize("use_bridge", [True, False])
@@ -65,7 +79,9 @@ def test_linearize_measmod_list(bvp, solver):
     dummy_times_array = np.arange(0.0, 100.0, N)
     measmod_list = solver.create_measmod_list(ode, left, right, times=dummy_times_array)
 
-    dummy_states = [randvars.Constant(np.ones(solver.dynamics_model.dimension))] * N
+    dummy_states = [
+        random_variables.Constant(np.ones(solver.dynamics_model.dimension))
+    ] * N
     lin_measmod_list = solver.linearise_measmod_list(
         measmod_list, dummy_states, dummy_times_array
     )

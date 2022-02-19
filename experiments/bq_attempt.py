@@ -13,7 +13,7 @@ def fun(x):
 
 # Construct objects
 gaussian_kernel = kernels.ExpQuad(input_dim=1, lengthscale=1.0)
-lebesgue_measure = quad.LebesgueMeasure(domain=[0.0, 1.0])
+lebesgue_measure = quad._integration_measures.LebesgueMeasure(domain=[0.0, 1.0])
 kernel_embedding = quad.KernelEmbedding(gaussian_kernel, lebesgue_measure)
 
 

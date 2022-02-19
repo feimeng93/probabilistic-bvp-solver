@@ -1,6 +1,6 @@
 """Error estimates."""
 import numpy as np
-from probnum import diffeq, randvars, utils
+from probnum import diffeq, random_variables, utils
 from probnum._randomvariablelist import _RandomVariableList
 
 

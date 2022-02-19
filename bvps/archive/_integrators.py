@@ -16,7 +16,7 @@ class WrappedIntegrator(statespace.Integrator, statespace.LTISDE):
     Examples
     --------
     >>> from probnum import statespace
-    >>> from probnum import random_variables as randvars
+    >>> from probnum import random_variables as random_variables
     >>> from bvps import bratus, BoundaryValueProblem
     >>> bvp = bratus()
     >>> print(isinstance(bvp, BoundaryValueProblem))
@@ -28,7 +28,7 @@ class WrappedIntegrator(statespace.Integrator, statespace.LTISDE):
     >>> integ = WrappedIntegrator(ibm, bvp)
     >>> print(integ)
     <WrappedIntegrator object>
-    >>> rv = randvars.Normal(np.ones(ibm.dimension), np.eye(ibm.dimension))
+    >>> rv = random_variables.Normal(np.ones(ibm.dimension), np.eye(ibm.dimension))
     >>> out, _  = integ.forward_realization(rv.sample(), bvp.t0, 0.1)
     >>> print(out)
     <Normal with shape=(6,), dtype=float64>

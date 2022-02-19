@@ -1,5 +1,7 @@
 import pytest
+import sys
 
+sys.path.append("..")
 from bvps.bridges import GaussMarkovBridge
 
 

@@ -1,7 +1,7 @@
 """Solving BVPs."""
 import numpy as np
 import scipy.linalg
-from probnum import diffeq, randvars, utils
+from probnum import diffeq, random_variables, utils
 from probnum._randomvariablelist import _RandomVariableList
 
 from bvps import (
@@ -62,7 +62,7 @@ def probsolve_bvp(
     m0 = np.ones(bridge_prior.dimension)
     c0 = initial_sigma_squared * np.ones(bridge_prior.dimension)
     C0 = np.diag(c0)
-    initrv_not_bridged = randvars.Normal(m0, C0, cov_cholesky=np.sqrt(C0))
+    initrv_not_bridged = random_variables.Normal(m0, C0, cov_cholesky=np.sqrt(C0))
     ibm = bridge_prior.integrator
     ibm.equivalent_discretisation_preconditioned._proc_noise_cov_cholesky *= np.sqrt(
         initial_sigma_squared
@@ -219,7 +219,7 @@ def probsolve_bvp(
         # )
         # assert discrepancy < 1e-8, discrepancy
 
-        initrv_not_initialised = randvars.Normal(
+        initrv_not_initialised = random_variables.Normal(
             mean=new_mean, cov=new_cov, cov_cholesky=new_cov_cholesky
         )
         initrv = bridge_prior.initialise_boundary_conditions(initrv_not_initialised)
@@ -329,7 +329,7 @@ def probsolve_bvp(
 
         mask = refinement_function(quotient)
 
-        # kalman.initrv = randvars.Normal(
+        # kalman.initrv = random_variables.Normal(
         #     mean=kalman_posterior[0].mean,
         #     cov=kalman.initrv.cov,
         #     cov_cholesky=kalman.initrv.cov_cholesky,

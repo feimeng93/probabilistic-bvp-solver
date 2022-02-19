@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from probnum import diffeq, filtsmooth
-from probnum import random_variables as randvars
-from probnum import randvars, statespace
+from probnum import random_variables as random_variables
+from probnum import random_variables, statespace
 from probnum._randomvariablelist import _RandomVariableList
 from scipy.integrate import solve_bvp
 from tqdm import tqdm

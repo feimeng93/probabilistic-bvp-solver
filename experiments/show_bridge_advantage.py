@@ -1,13 +1,18 @@
 """This script chisels out the advantage of using a bridge prior over not using one."""
+from pathlib import Path
 
+current_path = Path.cwd()
+pbvp_path = current_path.parent
+import sys
+
+sys.path.append("..")
 import itertools
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pytest
-from probnum import filtsmooth, randvars, statespace
+from probnum import filtsmooth, random_variables, statespace
 from tqdm import tqdm
-
 from bvps import bvp_solver, problem_examples, quadrature
 
 # bvp = problem_examples.problem_7_second_order(xi=1e-2)
@@ -27,10 +32,10 @@ MAXIT = 5
 
 plt.style.use(
     [
-        "./visualization/stylesheets/fontsize/7pt.mplstyle",
-        "./visualization/stylesheets/figsize/neurips/13_tile.mplstyle",
-        "./visualization/stylesheets/misc/thin_lines.mplstyle",
-        "./visualization/stylesheets/misc/bottomleftaxes.mplstyle",
+        "../visualization/stylesheets/fontsize/7pt.mplstyle",
+        "../visualization/stylesheets/figsize/neurips/13_tile.mplstyle",
+        "../visualization/stylesheets/misc/thin_lines.mplstyle",
+        "../visualization/stylesheets/misc/bottomleftaxes.mplstyle",
     ]
 )
 
@@ -123,7 +128,7 @@ for initial_guess, row_axis in zip([2 * np.ones((N, bvp.dimension)), None], ax):
             )
             axis.plot(
                 kalman_posterior.locations,
-                kalman_posterior.states.mean[:, 0],
+                kalman_posterior.state_rvs.mean[:, 0],
                 marker=marker,
                 color=color,
                 linestyle="None",

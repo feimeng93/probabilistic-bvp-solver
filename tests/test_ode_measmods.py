@@ -1,3 +1,6 @@
+import sys
+
+sys.path.append("..")
 from bvps.ode_measmods import from_ode, from_second_order_ode
 
 

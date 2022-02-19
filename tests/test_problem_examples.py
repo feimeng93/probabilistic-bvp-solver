@@ -1,4 +1,7 @@
 """Assert that the jacobians are implemented correctly."""
+import sys
+
+sys.path.append("..")
 import numpy as np
 import pytest
 

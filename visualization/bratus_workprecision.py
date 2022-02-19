@@ -133,7 +133,7 @@ ax[0].loglog(
     marker="*",
     markersize=3,
     linewidth=3.0,
-    alpha=0.3
+    alpha=0.3,
 )
 ax[1].loglog(
     scipy_times,
@@ -142,7 +142,7 @@ ax[1].loglog(
     marker="*",
     markersize=3,
     linewidth=3.0,
-    alpha=0.3
+    alpha=0.3,
 )
 ax[2].loglog(
     scipy_Ns,
@@ -152,10 +152,8 @@ ax[2].loglog(
     marker="*",
     markersize=3,
     linewidth=3.0,
-    alpha=0.3
+    alpha=0.3,
 )
-
-
 
 
 ax[0].set_xlabel(r"No. of grid points")
@@ -185,7 +183,13 @@ ax[2].set_ylim((2e-3, 3e0))
 ax[3].axhspan(out[0], out[1], alpha=0.1, color="black", linewidth=0.0)
 ax[3].axhline(1.0, color="black", linewidth=0.5)
 
-ax[2].legend(fancybox=False, edgecolor="black", fontsize="small",handlelength=1., loc="center right").get_frame().set_linewidth(0.5)
+ax[2].legend(
+    fancybox=False,
+    edgecolor="black",
+    fontsize="small",
+    handlelength=1.0,
+    loc="center right",
+).get_frame().set_linewidth(0.5)
 # ax[1].legend(fancybox=False, edgecolor="black").get_frame().set_linewidth(0.5)
 # ax[2].legend(fancybox=False, edgecolor="black").get_frame().set_linewidth(0.5)
 # ax[3].legend(fancybox=False, edgecolor="black").get_frame().set_linewidth(0.5)

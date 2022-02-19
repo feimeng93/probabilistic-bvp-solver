@@ -2,7 +2,7 @@
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-from probnum import randvars, statespace
+from probnum import random_variables, statespace
 from tqdm import tqdm
 
 from bvps import bridges, generate_samples, problem_examples
@@ -49,8 +49,12 @@ for q, ax in tqdm(zip(orders, axes.T), total=len(orders)):
 
     initmean = np.zeros(ibm.dimension)
     initmean[0] = 1.2
-    initrv_not_initialised = randvars.Normal(initmean, 0.125 * np.eye(ibm.dimension))
-    initrv_not_initialised2 = randvars.Normal(initmean, 5 * np.eye(ibm.dimension))
+    initrv_not_initialised = random_variables.Normal(
+        initmean, 0.125 * np.eye(ibm.dimension)
+    )
+    initrv_not_initialised2 = random_variables.Normal(
+        initmean, 5 * np.eye(ibm.dimension)
+    )
     initrv = prior.initialise_boundary_conditions(initrv_not_initialised2)
 
     base_measure_samples = np.random.randn(num_samples, len(grid), ibm.dimension)
